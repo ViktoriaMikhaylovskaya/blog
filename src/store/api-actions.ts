@@ -4,7 +4,7 @@ import { AppDispatch, State, store } from ".";
 import actions from "./reducer";
 import { ERRORS, TIMEOUT_SHOW_ERROR } from "./constants";
 import { processErrorHandle } from "../hooks/process-error-handle";
-import { IPostResponse } from "./interfaces";
+import { IPostResponse, IUserReactions } from "./interfaces";
 
 export const clearErrorAction = createAsyncThunk(
     'data/clearError',
@@ -36,17 +36,17 @@ export const fetchPostsAction = createAsyncThunk<void, { postCount: string, sear
     },
 );
 
-export const getPost = createAsyncThunk<void, string, {
+export const getPost = createAsyncThunk<void, { id: string, reactions: IUserReactions }, {
     dispatch: AppDispatch,
     state: State,
     extra: AxiosInstance
 }>(
     'postInfo/fetch',
-    async (id, { dispatch, extra: api }) => {
+    async ({ id, reactions }, { dispatch, extra: api }) => {
         try {
             dispatch(actions.setDataLoadedStatus(true));
             const response: IPostResponse = await api.get(`/posts/${id}`);
-            dispatch(actions.getPostInfo(response));
+            dispatch(actions.getPostInfo({ ...response, ...reactions }));
         } catch (error) {
             processErrorHandle(ERRORS.DEFAULT);
             throw new Error(String(error));

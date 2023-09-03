@@ -11,7 +11,7 @@ import { Button, ContentWrapper, Header, Icons, Title } from "./styles"
 const PostInfo = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { postInfo, isLoading } = useSelector(selector);
+    const { postInfo, isLoading, postList } = useSelector(selector);
     const fillLikeIcon = postInfo?.userAction === 'like' ? 'green' : 'black';
     const fillDislikeIcon = postInfo?.userAction === 'dislike' ? 'red' : 'black';
 
@@ -56,8 +56,20 @@ const PostInfo = () => {
     }
 
     useEffect(() => {
-        store.dispatch(getPost(String(id)));
-    }, [id])
+        if (!!postList[Number(id)]) {
+            const { likesCount, dislikesCount, userAction } = postList[Number(id)];
+            store.dispatch(getPost({ id: String(id), reactions: { likesCount, dislikesCount, userAction } }));
+        } else {
+            store.dispatch(getPost({
+                id: String(id),
+                reactions: {
+                    likesCount: Math.floor(Math.random() * 50),
+                    dislikesCount: Math.floor(Math.random() * 50),
+                    userAction: 'default',
+                }
+            }));
+        }
+    }, [id, postList]);
 
     return <>
         <Header>

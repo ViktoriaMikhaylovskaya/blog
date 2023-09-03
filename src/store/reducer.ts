@@ -43,12 +43,7 @@ export const reducer = createReducer(initialState, (builder) => {
         .addCase(actions.getPostInfo, (state, { payload }) => {
             state.isLoading = false;
             state.error = null;
-            state.postInfo = {
-                ...payload,
-                likesCount: Math.floor(Math.random() * 50),
-                dislikesCount: Math.floor(Math.random() * 50),
-                userAction: 'default',
-            }
+            state.postInfo = payload;
         })
         .addCase(actions.fail, (state, { payload }) => {
             state.error = payload;
