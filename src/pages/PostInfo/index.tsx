@@ -88,7 +88,7 @@ const PostInfo = () => {
             {isLoading ? <div>Loading...</div>
                 : <>
                     <Title>{postInfo?.title}</Title>
-                    <img alt='картинка поста' src='https://placehold.co/800x500/darkblue/yellow?text=Image' />
+                    <img alt='картинка поста' src='https://placehold.co/800x500/darkblue/yellow?text=Image' width='100%' />
                     <p>{postInfo?.body}</p>
                 </>
             }

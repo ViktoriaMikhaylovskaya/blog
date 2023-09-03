@@ -19,7 +19,12 @@ export const SearchInput = styled.input`
 
 export const ContentWrapper = styled.div`
     margin: 10px 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 38px;
+
+    @media (min-width: 1200px) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
 `

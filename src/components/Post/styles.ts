@@ -34,6 +34,7 @@ export const Content = styled.div`
 
 export const Photo = styled.img`
     border-radius: 16px 16px 0 0;
+    width: 100%;
 `
 
 export const Title = styled.h4`
